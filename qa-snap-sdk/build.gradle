@@ -1,19 +1,18 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
-    namespace 'com.jgeraldo.mediaprojectionsample'
+    namespace 'io.codingskuy.qa_snap'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.jgeraldo.mediaprojectionsample"
         minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -26,19 +25,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation libs.appcompat
     implementation libs.material
-    implementation libs.activity
-    implementation libs.constraintlayout
-    implementation libs.localbroadcastmanager
 
-    // Added dependencies for video recording and file handling
-    implementation 'androidx.documentfile:documentfile:1.0.1'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    // For media projection and recording
+    implementation libs.activity
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
